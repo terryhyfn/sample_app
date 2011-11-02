@@ -1,7 +1,8 @@
 require 'digest'
 
 class User < ActiveRecord::Base
-  attr_accessor(:password )
+  # create virtual attribute
+  attr_accessor(:password, :password_confirmation )  
   attr_accessible( :name, :email, :password, :password_confirmation )
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validate( :name, :presence => true, 
@@ -25,7 +26,7 @@ class User < ActiveRecord::Base
     return user if user.has_password?( submitted_password )
   end
   
-  private 
+
     def encrypted_password
       # save the salt and encrypted_password to database
       self.salt = make_salt if new_record?
