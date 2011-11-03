@@ -1,10 +1,15 @@
 SampleApp::Application.routes.draw do
+  get "sessions/new"
+
   # get "users/new"
   # put resources for controller name can auto generate rail default useful path so GET method works ie http://localhst:3000/users/1
   resources :users
+  resources :sessions, :only => [ :new, :create, :destroy ]
   
   # pages#about mean call controller pages then call about action in pages controller
   match '/signup', :to => 'users#new'
+  match '/signin', :to => 'sessions#new'
+  match '/signout', :to => 'sessions#destroy'
   match '/contact', :to => 'pages#contact'
   match '/about', :to => 'pages#about'
   match '/help', :to => 'pages#help'
